@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export default function Home() {
 	const CLIENT_ID = "98f0b93b224645efb38fe8dcfbdf712d"
-	const REDIRECT_URI = "http://176.205.103.177:3000/"
+	const REDIRECT_URI = "https://spotify-music-api-pi.vercel.app/"
 	const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 	const RESPONSE_TYPE = "token";
 	const SPACE_DELIMITER = "%20"
