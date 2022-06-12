@@ -157,6 +157,30 @@
   
   
 }
+.boxA img{
+  border-radius: 1000px;
+  flex-direction: column;  
+  box-shadow: 50px #FE6D73;
+  border-bottom:solid #FE6D73 10px; 
+  border-left:solid #FE6D73 4px; 
+  margin-bottom:10px;
+  margin-top:10px;
+  
+  
+}
+.boxA {
+  display: flex;
+  flex-direction: column;
+  padding:15px;
+  color: #0B0500;  
+  border-bottom: groove 3px #FE6D73;
+  margin-bottom:10px;
+  max-width: 300px;  
+  align-items: center;
+}
+
+
+
 
 @media(max-width:900px){
   
@@ -308,6 +332,11 @@
     width: 250px;
     height: 250px
     
+    
+  }
+  .boxA img{    
+    width: 250px;
+    height: 250px    
     
   }
 

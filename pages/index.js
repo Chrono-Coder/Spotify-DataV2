@@ -11,12 +11,12 @@ export default function Home() {
 	const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 	const RESPONSE_TYPE = "token";
 	const SPACE_DELIMITER = "%20"
-	const SCOPES = ["user-library-read", "user-read-currently-playing", "user-top-read", "user-follow-read", "user-read-email"]
+	const SCOPES = ["user-library-read", "user-read-currently-playing", "user-top-read", "user-follow-read", "user-read-email","user-read-recently-played"]
 	const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER)
 
 	const [token, setToken] = useState("")
 	const [searchKey, setSearchKey] = useState("")
-	const [filter, setFilter] = useState("artist")
+	const [filter, setFilter] = useState("none")
 
 	const [artists, setArtists] = useState([])
 	const [albums, setAlbums] = useState([])
@@ -45,14 +45,14 @@ export default function Home() {
 			// token = hash.substring(1).split("&").find(el => el.startsWith("access_token")).split("=")[1]
 			// window.location.hash = ""
 			// window.localStorage.setItem("token", token)
-			console.log(paramsSplit);
+			//console.log(paramsSplit);
 			let {access_token, expires_in, token_type}= paramsSplit			
 			window.localStorage.setItem("token", access_token)
 			window.localStorage.setItem("TTL", expires_in)
 			window.localStorage.setItem("Token_type", token_type)
 			window.location.hash = ""
 		}
-		console.log(access_token)
+		//console.log(access_token)
 		setToken(access_token)
 	}, [])
 
@@ -63,13 +63,14 @@ export default function Home() {
 
 
 
-	//HTTP REQUEST
-
+	//HTTP REQUEST	
 	
 	async function searchData(e) {
+		console.log("HEY")
 		
 		e.preventDefault()
 		if (filter == 'artist') {
+			
 			const { data } = await axios.get("https://api.spotify.com/v1/search", {
 				headers: {
 					Authorization: `Bearer ${token}`
@@ -84,6 +85,7 @@ export default function Home() {
 			setArtists(data.artists.items)
 		}
 		else if (filter == "album") {
+			
 			const { data } = await axios.get("https://api.spotify.com/v1/search", {
 				headers: {
 					Authorization: `Bearer ${token}`
@@ -158,8 +160,21 @@ export default function Home() {
 				}				
 
 			})
+			// const { data2 } = await axios.get("https://api.spotify.com/v1/me/player/recently-played", { 
+			// 	headers: {
+			// 		Authorization: `Bearer ${token}`
+			// 	},
+			// 	params: {
+			// 		limit:1,
+			// 		after:1000
+			// 	}			
+
+			// })
 			console.log(data)
-			setCurrentTrack(data.item)
+			//data ? 
+			setCurrentTrack(data.item)// : setCurrentTrack(data2?.items[0])
+			
+			
 		}
 
 		else if(filter == "library"){
@@ -181,7 +196,7 @@ export default function Home() {
 	}
 	function renderArtists(artists) {
 		return artists.map(artist => (
-			<div key={artist.id} className={styles.box}>
+			<div key={artist.id} className={styles.boxA}>
 				{artist.images.length ? <img width={300} height={300} src={artist.images[0].url} alt="" /> : <div>No Image</div>}
 				<h2>{artist.name}</h2>
 			</div>
@@ -236,7 +251,7 @@ export default function Home() {
 
 			<nav className={styles.navbar}>
 				<div className={styles.image}>					
-					<Image  src ="/images/black.png"  width={"200%"} height={"60%"}/>	
+					<Image priority src ="/images/black.png"  width={"200%"} height={"60%"}/>	
 									
 				</div>
 				<h1>Data Collection</h1>
@@ -254,11 +269,14 @@ export default function Home() {
 				{token ?
 					<form onSubmit={searchData} className={styles.myform}>
 						<label></label>
-						<select name="Filter" id="Filter" required onChange={() => setFilter(document.getElementById('Filter').value)}>
-							<option value="artist" >Artists</option>
+						<select name="Filter" id="Filter" defaultValue="none" required onChange={() =>setFilter(document.getElementById('Filter').value)} >
+							
+							{/* {document.getElementById('Filter')?.value ? console.log("Selected:" + document.getElementById('Filter').value) : console.log("Selected:" + "Blank")} */}
+							<option value="none"  disabled hidden>Select an Option</option>
+							<option value="artist">Artists</option>
 							<option value="album">Albums</option>
 							<option value="following">Following</option>
-							<option value="library">Library</option>
+							<option value="library" >Library </option>
 							<option value="current">Current</option>
 							<option value="topArtists">Top Artists</option>
 							<option value="topTracks">Top Tracks</option>
@@ -266,7 +284,7 @@ export default function Home() {
 						</select>
 
 						<br></br>
-						<input type="text" placeholder="search..." onChange={e => setSearchKey(e.target.value)}></input>
+						<input type="text" placeholder="search..." onChange={e => {setSearchKey(e.target.value);}}></input>
 						<input type={"submit"} id="but" value="Submit" />
 
 					</form>
