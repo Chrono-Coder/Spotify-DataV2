@@ -50,7 +50,7 @@ export default function Home() {
 			window.localStorage.setItem("token", access_token)
 			window.localStorage.setItem("TTL", expires_in)
 			window.localStorage.setItem("Token_type", token_type)
-			window.location.hash = ""
+			window.location.hash = "#"
 		}
 		//console.log(access_token)
 		setToken(access_token)
@@ -66,7 +66,7 @@ export default function Home() {
 	//HTTP REQUEST	
 	
 	async function searchData(e) {
-		console.log("HEY")
+		//console.log("HEY")
 		
 		e.preventDefault()
 		if (filter == 'artist') {
