@@ -30,30 +30,39 @@ export default function Home() {
 	
 	useEffect(() => {
 		const hash = window.location.hash
-		let access_token = window.localStorage.getItem("token")
-		let expires_in = window.localStorage.getItem("TTL")
-		let token_type = window.localStorage.getItem("Token_type")
+		let token = window.localStorage.getItem("token")
 
-		if (!access_token && hash) {
-			const paramsInUrl=hash.substring(1).split("&")
-			var paramsSplit = paramsInUrl.reduce((accu, curr) => {
-				const [key, value] = curr.split("=")
-				accu[key] = value
-				console.log(accu)
-				return accu
-			}, {})
-			// token = hash.substring(1).split("&").find(el => el.startsWith("access_token")).split("=")[1]
-			// window.location.hash = ""
-			// window.localStorage.setItem("token", token)
-			//console.log(paramsSplit);
-			let {access_token, expires_in, token_type}= paramsSplit			
-			window.localStorage.setItem("token", access_token)
-			window.localStorage.setItem("TTL", expires_in)
-			window.localStorage.setItem("Token_type", token_type)
-			window.location.hash = "#"
+		if (!token && hash) {
+			token = hash.substring(1).split("&").find(el => el.startsWith("access_token")).split("=")[1]
+			window.location.hash = ""
+			window.localStorage.setItem("token", token)
+
 		}
+		setToken(token)
+		// const hash = window.location.hash
+		// let access_token = window.localStorage.getItem("token")
+		// let expires_in = window.localStorage.getItem("TTL")
+		// let token_type = window.localStorage.getItem("Token_type")
+		// if (!access_token && hash) {
+		// 	const paramsInUrl=hash.substring(1).split("&")
+		// 	var paramsSplit = paramsInUrl.reduce((accu, curr) => {
+		// 		const [key, value] = curr.split("=")
+		// 		accu[key] = value
+		// 		console.log(accu)
+		// 		return accu
+		// 	}, {})
+		// 	// token = hash.substring(1).split("&").find(el => el.startsWith("access_token")).split("=")[1]
+		// 	// window.location.hash = ""
+		// 	// window.localStorage.setItem("token", token)
+		// 	//console.log(paramsSplit);
+		// 	let {access_token, expires_in, token_type}= paramsSplit			
+		// 	window.localStorage.setItem("token", access_token)
+		// 	window.localStorage.setItem("TTL", expires_in)
+		// 	window.localStorage.setItem("Token_type", token_type)
+		// 	window.location.hash = "#"
+		// }
 		//console.log(access_token)
-		setToken(access_token)
+		//setToken(access_token)
 	}, [])
 
 	function logoutHandler() {
