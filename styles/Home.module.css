@@ -219,7 +219,7 @@
 
 }
 
-@media(max-width:400px){
+@media(max-width:450px){
   .header .myform{
     margin:0;
     display:flex;
