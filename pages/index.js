@@ -6,11 +6,13 @@ import axios from 'axios'
 
 export default function Home() {
 	const CLIENT_ID = "98f0b93b224645efb38fe8dcfbdf712d"
+	const CLIENT_SECRET_ID = "98f0b93b224645efb38fe8dcfbdf712d"
 	const REDIRECT_URI = "https://spotify-music-api-pi.vercel.app/"
+	// const REDIRECT_URI = "http://localhost:3000/"
 	const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 	const RESPONSE_TYPE = "token";
 	const SPACE_DELIMITER = "%20"
-	const SCOPES = ["user-library-read", "user-read-currently-playing", "user-top-read", "user-follow-read"]
+	const SCOPES = ["user-library-read", "user-read-currently-playing", "user-top-read", "user-follow-read", "user-read-email"]
 	const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER)
 
 	const [token, setToken] = useState("")
@@ -29,15 +31,30 @@ export default function Home() {
 	
 	useEffect(() => {
 		const hash = window.location.hash
-		let token = window.localStorage.getItem("token")
+		let access_token = window.localStorage.getItem("token")
+		let expires_in = window.localStorage.getItem("TTL")
+		let token_type = window.localStorage.getItem("Token_type")
 
-		if (!token && hash) {
-			token = hash.substring(1).split("&").find(el => el.startsWith("access_token")).split("=")[1]
+		if (!access_token && hash) {
+			const paramsInUrl=hash.substring(1).split("&")
+			var paramsSplit = paramsInUrl.reduce((accu, curr) => {
+				const [key, value] = curr.split("=")
+				accu[key] = value
+				console.log(accu)
+				return accu
+			}, {})
+			// token = hash.substring(1).split("&").find(el => el.startsWith("access_token")).split("=")[1]
+			// window.location.hash = ""
+			// window.localStorage.setItem("token", token)
+			console.log(paramsSplit);
+			let {access_token, expires_in, token_type}= paramsSplit			
+			window.localStorage.setItem("token", access_token)
+			window.localStorage.setItem("TTL", expires_in)
+			window.localStorage.setItem("Token_type", token_type)
 			window.location.hash = ""
-			window.localStorage.setItem("token", token)
-
 		}
-		setToken(token)
+		console.log(access_token)
+		setToken(access_token)
 	}, [])
 
 	function logoutHandler() {
@@ -181,14 +198,14 @@ export default function Home() {
 	}
 
 	function renderTrack(track) {
-		if(track)
-			return (
-				<div className={styles.box}>
-					{track.album.images.length ? <img width={300} height={300} src={track.album.images[0].url} alt="" /> : <div>No Image</div>} 
-					<h1>{track.name}</h1>
-					<h4>{track.album.name}</h4>
-				</div>
-			)
+		
+		return (
+			<div className={styles.box}>
+				{track?.album.images.length ? <img width={300} height={300} src={track?.album.images[0].url} alt="" /> : <div>No Image</div>} 
+				<h1>{track?.name}</h1>
+				<h4>{track?.album.name}</h4>
+			</div>
+		)
 	}
 	function renderTrack1({ track }) {		
 		return (
@@ -267,9 +284,7 @@ export default function Home() {
 										: filter == 'library' ? renderTracks(tracks)
 											: renderTracks1(topTracks)}
 			</div>
-			{/* {renderAlbums()}
-			{renderArtist()}
-			{renderFollowing()} */}
+			
 
 
 
