@@ -9,45 +9,6 @@
 
 
 
-.myform input[type="submit"]:hover{
-  /* color: #227C9D; */
-  color: #00A878;
-  
-}
-
-.myform input[type="submit"]{
-  color:#0B0500;  
-  font-size:x-large;
-  font-weight: bold;
-  border: none;
-  text-decoration: underline;
-  background-color:  #FEF9EF; 
-}
-.myform label{  
-  color:#0B0500;  
-  font-size:x-large;
-  font-weight: bold;
-  border: none;
-  /* background-color: #FEF9EF;  */
-}
-
-.myform select{  
-  color:#0B0500;  
-  font-size:x-large;
-  font-weight: bold;
-  margin-right: 5rem;
-  /* border: none; */
-  /* background-color: #FEF9EF; */
-}
-
-.myform input[type="text"]{  
-  color:#0B0500;  
-  font-size:x-large;
-  font-weight: bold;
-  padding-left:10px;
-  margin-right: 5rem;
-}
-
 .header .myform{
   display:flex;
   margin:1rem;
@@ -119,23 +80,76 @@
   align-self: left;  
   padding-left: 10px;
   font-weight: bold;
-  flex:5;
-  
+  flex:5;  
+}
+
+.myform input[type="submit"]:hover{
+  /* color: #227C9D; */
+  color: #00A878;
+  cursor: pointer;
   
 }
 
+.myform input[type="submit"]{
+  color:#0B0500;  
+  font-size:x-large;
+  font-weight: bold;
+  border: none;
+  text-decoration: underline;
+  background-color:  #FEF9EF; 
+}
+.myform label{  
+  color:#0B0500;  
+  font-size:x-large;
+  font-weight: bold;
+  border: none;
+  /* background-color: #FEF9EF;  */
+}
 
+.myform select{  
+  color:#0B0500;  
+  font-size:x-large;
+  font-weight: bold;
+  margin-right: 5rem;
+  /* border: none; */
+  /* background-color: #FEF9EF; */
+}
+
+.myform input[type="text"]{  
+  color:#0B0500;  
+  font-size:x-large;
+  font-weight: bold;
+  padding-left:10px;
+  margin-right: 5rem;
+}
+
+/* BOXES */
 .boxes {
   background-color:#FEF9EF;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;  
   margin:10px 0;
-  
-  
-  
-
+  flex:1
 }
+.boxes .link a{
+  color:#0B0500;  
+  font-size:x-large;
+  font-weight: bold;
+  text-decoration: none;
+  max-height:50px;
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+
+.boxes .link a:hover{
+  text-decoration: underline;
+  color:#FE6D73
+}
+
 .box {
   display: flex;
   flex-direction: column;
@@ -145,12 +159,36 @@
   margin-bottom:10px;
   max-width: 300px;  
   align-items: center;
+  flex:1
+}
+.box :hover{
+  cursor: pointer;
+}
+.box img:hover {
+  border-right:solid #FE6D73 0px;
+  border-left:solid #FE6D73 20px;
+}
+.boxA img:hover {
+  border:none;  
+  border-top:solid #FE6D73 10px; 
+  border-right:solid #FE6D73 4px; 
+
 }
 
+.boxA {
+  display: flex;
+  flex-direction: column;
+  padding:15px;
+  color: #0B0500;  
+  border-bottom: groove 3px #FE6D73;
+  margin-bottom:10px;
+  max-width: 300px;  
+  align-items: center;
+}
 .box img{
   border-radius: 100px;
   flex-direction: column;  
-  box-shadow: 50px #FE6D73;
+  box-shadow: 50px #103fda;
   border-right:solid #FE6D73 10px; 
   margin-bottom:10px;
   margin-top:10px;
@@ -168,16 +206,7 @@
   
   
 }
-.boxA {
-  display: flex;
-  flex-direction: column;
-  padding:15px;
-  color: #0B0500;  
-  border-bottom: groove 3px #FE6D73;
-  margin-bottom:10px;
-  max-width: 300px;  
-  align-items: center;
-}
+
 
 
 
@@ -205,13 +234,13 @@
     margin:0;
     
   }
-  .navbar .image{
+  /* .navbar .image{
     margin-right:0;
-  }
-  .navbar h1{
+  } */
+  /* .navbar h1{
     margin-top: 10px;
     
-  }
+  } */
   .navbar .myform input[type="submit"] {  
     flex:1;       
     font-size:smaller;       
@@ -243,7 +272,7 @@
 
 }
 
-@media(max-width:450px){
+@media(max-width:500px){
   .header .myform{
     margin:0;
     display:flex;
@@ -338,6 +367,9 @@
     width: 250px;
     height: 250px    
     
+  }
+  .boxes .link a{
+    max-width: 250px;
   }
 
 

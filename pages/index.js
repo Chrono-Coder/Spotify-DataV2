@@ -7,7 +7,7 @@ import axios from 'axios'
 export default function Home() {
 	const CLIENT_ID = "98f0b93b224645efb38fe8dcfbdf712d"
 	const REDIRECT_URI = "https://spotify-data-chrono-coder.vercel.app/"
-	// const REDIRECT_URI = "http://localhost:3000/"
+	// const REDIRECT_URI = "http://176.205.103.177:3000/"/*http://localhost:3000/"*/
 	const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 	const RESPONSE_TYPE = "token";
 	const SPACE_DELIMITER = "%20"
@@ -206,16 +206,16 @@ export default function Home() {
 	function renderArtists(artists) {
 		return artists.map(artist => (
 			<div key={artist.id} className={styles.boxA}>
-				{artist.images.length ? <img width={300} height={300} src={artist.images[0].url} alt="" /> : <div>No Image</div>}
-				<h2>{artist.name}</h2>
+				{artist.images.length ? <a href={artist.uri}><img width={300} height={300} src={artist.images[0].url} alt=""></img></a> : <div>No Image</div>}
+				<p className={styles.link}><a href={artist.uri}>{artist.name} </a></p>
 			</div>
 		))
 	}
 	function renderAlbums(albums) {
 		return albums.map(album => (
 			<div key={album.id} className={styles.box}>
-				{album.images.length ? <img width={300} height={300} src={album.images[0].url} alt="" /> : <div>No Image</div>}
-				<h2>{album.name}</h2>
+				{album.images.length ? <a href={album.uri}><img width={300} height={300} src={album.images[0].url} alt="" /></a> : <div>No Image</div>}
+				<p className={styles.link}><a href={album.uri}>{album.name} </a></p>
 			</div>
 		))
 	}
@@ -224,18 +224,18 @@ export default function Home() {
 		
 		return (
 			<div className={styles.box}>
-				{track?.album.images.length ? <img width={300} height={300} src={track?.album.images[0].url} alt="" /> : <div>No Image</div>} 
-				<h1>{track?.name}</h1>
-				<h4>{track?.album.name}</h4>
+				{track?.album.images.length ? <a href={track?.uri}><img width={300} height={300} src={track?.album.images[0].url} alt="" /></a> : <div>No Image</div>} 
+				<p className={styles.link}><a href={track?.uri}>{track?.name}</a></p>
+				{/* <p><a href={track?.album.uri}>{track?.album.name}</a></p> */}
 			</div>
 		)
 	}
 	function renderTrack1({ track }) {		
 		return (
 			<div key={track.id} className={styles.box}>
-				{track.album.images.length ? <img width={300} height={300} src={track.album.images[0].url} alt="" /> : <div>No Image</div>} 
-				<h1>{track.name}</h1>
-				<h4>{track.album.name}</h4>
+				{track.album.images.length ? <a href={track?.uri}><img width={300} height={300} src={track?.album.images[0].url} alt="" /></a> : <div>No Image</div>} 
+				<p className={styles.link}><a href={track?.uri}>{track?.name}</a></p>
+				{/* <h4><a href={track?.album.uri}>{track?.album.name}</a></h4> */}
 			</div>
 		)
 	}
