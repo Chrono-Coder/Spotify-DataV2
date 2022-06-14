@@ -8,8 +8,8 @@ import * as d3_scale from 'd3-scale'
 
 export default function Home() {//{ topTracksData, topArtistsData, followingData, playlistsData, libraryData, currentTrackData }
 	const CLIENT_ID = "98f0b93b224645efb38fe8dcfbdf712d"
-    const REDIRECT_URI = "https://spotify-data-v2.vercel.app/"
-    // const REDIRECT_URI = "http://176.205.103.177:3000/"//help/login/"/*http://localhost:3000/"*/
+    // const REDIRECT_URI = "https://spotify-data-v2.vercel.app/"
+    const REDIRECT_URI = "http://176.205.103.177:3000/"//help/login/"/*http://localhost:3000/"*/
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
     const RESPONSE_TYPE = "token";
     const SPACE_DELIMITER = "%20"
@@ -412,7 +412,7 @@ export default function Home() {//{ topTracksData, topArtistsData, followingData
 					<header className={styles.header}>
 						<form  className={styles.myform}>
 							<label></label>
-							<select name="Filter" id="Filter" defaultValue="none" required onClick={() => {
+							<select name="Filter" id="Filter" defaultValue="none" required onChange={() => {
 								setFilter(document.getElementById('Filter').value)
 								// console.log(filter)
 								// getData
