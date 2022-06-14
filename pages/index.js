@@ -6,12 +6,6 @@ import axios from 'axios'
 import * as d3 from 'd3'
 import * as d3_scale from 'd3-scale'
 
-// const d3 = {
-//     ...d3_request,
-//     ...d3_scale
-// };
-
-
 export default function Home() {//{ topTracksData, topArtistsData, followingData, playlistsData, libraryData, currentTrackData }
 	const CLIENT_ID = "98f0b93b224645efb38fe8dcfbdf712d"
     const REDIRECT_URI = "https://spotify-data-v2.vercel.app/"
