@@ -4,12 +4,11 @@ import styles from '../styles/Home.module.css'
 import { useState, useEffect} from 'react'
 import axios from 'axios'
 import * as d3 from 'd3'
-import * as d3_scale from 'd3-scale'
 
 export default function Home() {//{ topTracksData, topArtistsData, followingData, playlistsData, libraryData, currentTrackData }
 	const CLIENT_ID = "98f0b93b224645efb38fe8dcfbdf712d"
-    const REDIRECT_URI = "https://spotify-data-v2.vercel.app/"
-    // const REDIRECT_URI = "http://176.205.103.177:3000/"//help/login/"/*http://localhost:3000/"*/
+    // const REDIRECT_URI = "https://spotify-data-v2.vercel.app/"
+    const REDIRECT_URI = "http://176.205.103.177:3000/"//help/login/"/*http://localhost:3000/"*/
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
     const RESPONSE_TYPE = "token";
     const SPACE_DELIMITER = "%20"
@@ -52,12 +51,14 @@ export default function Home() {//{ topTracksData, topArtistsData, followingData
 	useEffect(() => {
 		// console.log(event)
 		getData(event)
-
+		if (filter=="album" || filter=="playlist" || filter=="current" ||  filter=="library")
+			setIsGrid(false)
     }, [filter])
 	
 	useEffect(() => {
     if(!isGrid){
-		renderGraph(artists)
+		(filter == 'artist' && searchKey != "") ? renderArtists(artists) : filter == 'following' ? renderArtists(following): filter == 'topArtists' ?  renderArtists(top) : filter						
+		console.log(filter)
 	}		
     }, [isGrid])
 
@@ -266,12 +267,12 @@ export default function Home() {//{ topTracksData, topArtistsData, followingData
 			if(dict[key]!= 0)
 				data.push( {genre:key, count:dict[key]})	
 		}
-		console.log(data)
+		
 		
 		const WIDTH=600
 		const HEIGHT=400
 
-		const x = d3.scaleBand().rangeRound([0,WIDTH]).padding(0.1)
+		const x = d3.scaleBand().rangeRound([0,WIDTH]).padding(0.3)
 		const y = d3.scaleLinear().range([HEIGHT,0])
 
 		x.domain(data.map(d => d.genre))
@@ -288,9 +289,11 @@ export default function Home() {//{ topTracksData, topArtistsData, followingData
 		
 
 		chartContainer
-		.append("g")
+		.append("g")		
 		.call(d3.axisBottom(x))
-		.attr("color", "#FE6D73")
+		.attr("color", "#9F9FED")
+		.attr("textLength", "10")
+		
 
 		chartContainer
 		.selectAll('rect')
@@ -312,17 +315,7 @@ export default function Home() {//{ topTracksData, topArtistsData, followingData
 		.attr('x', d  => x(d.genre) + x.bandwidth()/2)
 		.attr('y', d => y(d.count) -20)
 		.attr('text-anchor', 'middle')
-		
-		
-		// chartContainer
-		// .selectAll(".label")
-		// .data(data)
-		// .enter()
-		// .append("text")
-		// .text(d => d.genre)
-		// .attr('x', d  => x(d.genre) + x.bandwidth()/2)
-		// .attr('y', 15 )
-		// .attr('text-anchor', 'middle')
+
 
 	}
 	function renderArtists(artists) {
@@ -410,8 +403,7 @@ export default function Home() {//{ topTracksData, topArtistsData, followingData
 			<>
 				{token ?
 					<header className={styles.header}>
-						<form  className={styles.myform}>
-							<label></label>
+						<form  className={styles.myform}>							
 							<select name="Filter" id="Filter" defaultValue="none" required onChange={() => {
 								setFilter(document.getElementById('Filter').value)
 								// console.log(filter)
@@ -424,8 +416,8 @@ export default function Home() {//{ topTracksData, topArtistsData, followingData
 								<option value="artist">Artists</option>
 								<option value="album">Albums</option>
 								<option value="following">Following</option>
-								<option value="library" >Library </option>
-								<option value="current">Current</option>
+								<option value="library" >Liked</option>
+								<option value="current">Playing Now</option>
 								<option value="topArtists">Top Artists</option>
 								<option value="topTracks">Top Tracks</option>
 								<option value="playlist">Playlists</option>
