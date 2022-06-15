@@ -167,19 +167,8 @@ export default function Home() {//{ topTracksData, topArtistsData, followingData
 				}
 
 			})
-			// const { data2 } = await axios.get("https://api.spotify.com/v1/me/player/recently-played", { 
-			// 	headers: {
-			// 		Authorization: `Bearer ${token}`
-			// 	},
-			// 	params: {
-			// 		limit:1,
-			// 		after:1000
-			// 	}			
-
-			// })
 			console.log(data)
-			//data ? 
-			setCurrentTrack(data.item)// : setCurrentTrack(data2?.items[0])
+			setCurrentTrack(data.item)
 
 
 		}
@@ -322,7 +311,7 @@ export default function Home() {//{ topTracksData, topArtistsData, followingData
 		if (isGrid)
 			return artists.map(artist => (
 				<div key={artist.id} className={styles.boxA}>
-					{artist.images.length ? <a href={artist.uri}><img width={300} height={300} src={artist.images[0].url} alt=""></img></a> : <div>No Image</div>}
+					{artist.images.length ? <a href={artist.uri}><img width={300} height={300} src={artist.images[0].url} alt="/images/user.png"></img></a> : <a href={artist.uri}><img width={310} height={310} src="/images/user.png"></img></a>}
 					<p className={styles.link}><a href={artist.uri}>{artist.name} </a></p>
 				</div>
 			))
